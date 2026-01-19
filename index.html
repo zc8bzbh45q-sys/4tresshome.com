@@ -460,7 +460,7 @@
             <img src="assets/logo.png" alt="4tress" class="hero-logo">
             <h1>Protect Your Property.<br><span>Even When You're Not There.</span></h1>
             <p>Smart monitoring sensors that alert you to temperature issues, water leaks, unusual activity, and more. Perfect for vacation homes, Airbnb hosts, and rental property owners.</p>
-            <form class="signup-form" id="signup" action="#" method="POST">
+            <form class="signup-form" id="signup" action="https://formspree.io/f/xbddybyr" method="POST">
                 <input type="email" name="email" placeholder="Enter your email" required>
                 <button type="submit">Join the Waitlist</button>
             </form>
@@ -594,7 +594,7 @@
         <div class="container">
             <h2>Be the First to Protect Your Property</h2>
             <p>Join the waitlist for early access and exclusive launch pricing.</p>
-            <form class="signup-form" action="#" method="POST">
+            <form class="signup-form" action="https://formspree.io/f/xbddybyr" method="POST">
                 <input type="email" name="email" placeholder="Enter your email" required>
                 <button type="submit">Get Early Access</button>
             </form>
@@ -611,32 +611,41 @@
     </footer>
 
     <script>
-        // Simple form handling - replace with your actual backend
         document.querySelectorAll('.signup-form').forEach(form => {
-            form.addEventListener('submit', function(e) {
+            form.addEventListener('submit', async function(e) {
                 e.preventDefault();
                 const email = this.querySelector('input[type="email"]').value;
+                const button = this.querySelector('button');
+                const originalText = button.textContent;
 
-                // For demo purposes, show success message
-                // Replace this with actual form submission to your backend
-                // Example: fetch('/api/waitlist', { method: 'POST', body: JSON.stringify({ email }) })
+                button.textContent = 'Sending...';
+                button.disabled = true;
 
-                const successMsg = document.getElementById('success-message');
-                if (successMsg) {
-                    successMsg.classList.add('show');
+                try {
+                    const response = await fetch(this.action, {
+                        method: 'POST',
+                        body: new FormData(this),
+                        headers: { 'Accept': 'application/json' }
+                    });
+
+                    if (response.ok) {
+                        const successMsg = document.getElementById('success-message');
+                        if (successMsg) {
+                            successMsg.classList.add('show');
+                        }
+                        this.querySelector('input[type="email"]').value = '';
+                        button.textContent = 'Done!';
+                    } else {
+                        button.textContent = 'Error - Try again';
+                    }
+                } catch (error) {
+                    button.textContent = 'Error - Try again';
                 }
-                this.querySelector('input[type="email"]').value = '';
 
-                // Log for testing - remove in production
-                console.log('Email submitted:', email);
-
-                // You can integrate with:
-                // - Mailchimp
-                // - ConvertKit
-                // - Buttondown
-                // - Your own backend API
-                // - Google Forms
-                // - Formspree
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.disabled = false;
+                }, 3000);
             });
         });
     </script>
