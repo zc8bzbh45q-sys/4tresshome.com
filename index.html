@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="4tress - Smart property monitoring for vacation homes and rental properties. Protect your property with temperature, humidity, water leak, and presence sensors.">
+    <title>4tress | Smart Monitoring for Vacation Homes & Rentals</title>
+    <link rel="icon" type="image/png" href="assets/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2D3748;
+            --primary-light: #4A5568;
+            --accent: #3182CE;
+            --accent-hover: #2B6CB0;
+            --bg-light: #F7FAFC;
+            --bg-white: #FFFFFF;
+            --text-dark: #1A202C;
+            --text-gray: #718096;
+            --border: #E2E8F0;
+            --success: #48BB78;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: var(--bg-white);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Navigation */
+        nav {
+            padding: 20px 0;
+            background: var(--bg-white);
+            border-bottom: 1px solid var(--border);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            height: 40px;
+        }
+
+        .nav-cta {
+            background: var(--accent);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+
+        .nav-cta:hover {
+            background: var(--accent-hover);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 140px 0 80px;
+            background: linear-gradient(180deg, var(--bg-white) 0%, var(--bg-light) 100%);
+            text-align: center;
+        }
+
+        .hero-logo {
+            width: 120px;
+            margin-bottom: 32px;
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero h1 span {
+            color: var(--accent);
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-gray);
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+
+        /* Email Signup Form */
+        .signup-form {
+            display: flex;
+            gap: 12px;
+            max-width: 480px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .signup-form input[type="email"] {
+            flex: 1;
+            min-width: 250px;
+            padding: 14px 20px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+
+        .signup-form input[type="email"]:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .signup-form button {
+            padding: 14px 32px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+        }
+
+        .signup-form button:hover {
+            background: var(--accent-hover);
+            transform: translateY(-1px);
+        }
+
+        .signup-note {
+            margin-top: 16px;
+            font-size: 0.875rem;
+            color: var(--text-gray);
+        }
+
+        /* Problem Section */
+        .problem {
+            padding: 80px 0;
+            background: var(--bg-white);
+        }
+
+        .problem h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 16px;
+            color: var(--primary);
+        }
+
+        .problem > .container > p {
+            text-align: center;
+            color: var(--text-gray);
+            max-width: 700px;
+            margin: 0 auto 48px;
+            font-size: 1.1rem;
+        }
+
+        .pain-points {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .pain-point {
+            background: var(--bg-light);
+            padding: 24px;
+            border-radius: 12px;
+            border-left: 4px solid #E53E3E;
+        }
+
+        .pain-point h3 {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            color: var(--primary);
+        }
+
+        .pain-point p {
+            color: var(--text-gray);
+            font-size: 0.95rem;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 80px 0;
+            background: var(--bg-light);
+        }
+
+        .features h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 16px;
+            color: var(--primary);
+        }
+
+        .features > .container > p {
+            text-align: center;
+            color: var(--text-gray);
+            max-width: 600px;
+            margin: 0 auto 48px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 32px;
+        }
+
+        .feature-card {
+            background: var(--bg-white);
+            padding: 32px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, var(--accent) 0%, #63B3ED 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .feature-icon svg {
+            width: 28px;
+            height: 28px;
+            color: white;
+        }
+
+        .feature-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 12px;
+            color: var(--primary);
+        }
+
+        .feature-card p {
+            color: var(--text-gray);
+            font-size: 0.95rem;
+        }
+
+        .coming-soon {
+            display: inline-block;
+            background: #EDF2F7;
+            color: var(--text-gray);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            margin-left: 8px;
+        }
+
+        /* How It Works */
+        .how-it-works {
+            padding: 80px 0;
+            background: var(--bg-white);
+        }
+
+        .how-it-works h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 48px;
+            color: var(--primary);
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 40px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .step {
+            text-align: center;
+        }
+
+        .step-number {
+            width: 48px;
+            height: 48px;
+            background: var(--accent);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin: 0 auto 20px;
+        }
+
+        .step h3 {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            color: var(--primary);
+        }
+
+        .step p {
+            color: var(--text-gray);
+            font-size: 0.95rem;
+        }
+
+        /* Benefits */
+        .benefits {
+            padding: 80px 0;
+            background: var(--primary);
+            color: white;
+        }
+
+        .benefits h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 48px;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 32px;
+            text-align: center;
+        }
+
+        .benefit h3 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #63B3ED;
+        }
+
+        .benefit p {
+            color: #CBD5E0;
+        }
+
+        /* CTA Section */
+        .cta {
+            padding: 80px 0;
+            background: var(--bg-light);
+            text-align: center;
+        }
+
+        .cta h2 {
+            font-size: 2rem;
+            margin-bottom: 16px;
+            color: var(--primary);
+        }
+
+        .cta > .container > p {
+            color: var(--text-gray);
+            margin-bottom: 32px;
+            font-size: 1.1rem;
+        }
+
+        /* Footer */
+        footer {
+            padding: 40px 0;
+            background: var(--primary);
+            color: #CBD5E0;
+            text-align: center;
+        }
+
+        footer .logo {
+            filter: brightness(0) invert(1);
+            height: 32px;
+            margin-bottom: 16px;
+        }
+
+        footer p {
+            font-size: 0.875rem;
+        }
+
+        footer a {
+            color: #63B3ED;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Success Message */
+        .success-message {
+            display: none;
+            background: #C6F6D5;
+            color: #276749;
+            padding: 16px 24px;
+            border-radius: 8px;
+            margin-top: 16px;
+            font-weight: 500;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 120px 0 60px;
+            }
+
+            .signup-form {
+                flex-direction: column;
+                padding: 0 20px;
+            }
+
+            .signup-form input[type="email"],
+            .signup-form button {
+                width: 100%;
+            }
+
+            .pain-points,
+            .features-grid,
+            .steps {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <img src="assets/logo.png" alt="4tress" class="logo">
+            <a href="#signup" class="nav-cta">Join Waitlist</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <img src="assets/logo.png" alt="4tress" class="hero-logo">
+            <h1>Protect Your Property.<br><span>Even When You're Not There.</span></h1>
+            <p>Smart monitoring sensors that alert you to temperature issues, water leaks, unusual activity, and more. Perfect for vacation homes, Airbnb hosts, and rental property owners.</p>
+            <form class="signup-form" id="signup" action="#" method="POST">
+                <input type="email" name="email" placeholder="Enter your email" required>
+                <button type="submit">Join the Waitlist</button>
+            </form>
+            <p class="signup-note">Be the first to know when we launch. No spam, ever.</p>
+            <div class="success-message" id="success-message">
+                You're on the list! We'll be in touch soon.
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section class="problem">
+        <div class="container">
+            <h2>Out of Sight Shouldn't Mean Out of Mind</h2>
+            <p>Whether it's your vacation home, a rental property, or a second residence - you can't always be there to catch problems before they become disasters.</p>
+            <div class="pain-points">
+                <div class="pain-point">
+                    <h3>Frozen Pipes & HVAC Failures</h3>
+                    <p>A broken heater in winter or failed AC in summer can lead to thousands in damage - whether you're away for the season or between guests.</p>
+                </div>
+                <div class="pain-point">
+                    <h3>Undetected Water Leaks</h3>
+                    <p>A slow leak under the sink can cause mold, structural damage, and costly repairs. Early detection saves thousands.</p>
+                </div>
+                <div class="pain-point">
+                    <h3>Unexpected Activity</h3>
+                    <p>Know when someone's at your property. Detect unauthorized access, parties, or disturbances before they become problems.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2>Everything You Need to Monitor Your Property</h2>
+            <p>Comprehensive sensors that keep you informed about what's happening at your property - in real time.</p>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                        </svg>
+                    </div>
+                    <h3>Temperature & Humidity</h3>
+                    <p>Get alerts when temperature drops below freezing or humidity rises to mold-risk levels. Prevent costly HVAC-related damage.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                        </svg>
+                    </div>
+                    <h3>Water Leak Detection</h3>
+                    <p>Sensors placed near water heaters, under sinks, and by appliances alert you the moment moisture is detected.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15.536a5 5 0 001.414 1.414m2.828-9.9a9 9 0 012.828-2.828" />
+                        </svg>
+                    </div>
+                    <h3>Noise Monitoring <span class="coming-soon">Coming Soon</span></h3>
+                    <p>Privacy-safe decibel monitoring alerts you to potential parties or disturbances before neighbors complain.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                    </div>
+                    <h3>Presence Detection</h3>
+                    <p>Know when someone arrives or leaves. Detect unexpected occupancy at your vacation home or between rental bookings.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works">
+        <div class="container">
+            <h2>Simple Setup, Powerful Protection</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Order Your Sensors</h3>
+                    <p>Choose the sensors you need based on your property. Most homes need just 2-4 devices.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Quick Installation</h3>
+                    <p>Plug in the hub, place your sensors. No tools or professional installation required.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Monitor from Anywhere</h3>
+                    <p>Get instant alerts on your phone. View real-time data and history from our dashboard.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits -->
+    <section class="benefits">
+        <div class="container">
+            <h2>Why Property Owners Choose 4tress</h2>
+            <div class="benefits-grid">
+                <div class="benefit">
+                    <h3>24/7</h3>
+                    <p>Round-the-clock monitoring</p>
+                </div>
+                <div class="benefit">
+                    <h3>&lt;1min</h3>
+                    <p>Alert response time</p>
+                </div>
+                <div class="benefit">
+                    <h3>$0</h3>
+                    <p>Monthly fees during beta</p>
+                </div>
+                <div class="benefit">
+                    <h3>100%</h3>
+                    <p>Privacy-focused design</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>Be the First to Protect Your Property</h2>
+            <p>Join the waitlist for early access and exclusive launch pricing.</p>
+            <form class="signup-form" action="#" method="POST">
+                <input type="email" name="email" placeholder="Enter your email" required>
+                <button type="submit">Get Early Access</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <img src="assets/logo.png" alt="4tress" class="logo">
+            <p>&copy; 2026 4tress. All rights reserved.</p>
+            <p style="margin-top: 8px;"><a href="mailto:hello@4tresshome.com">hello@4tresshome.com</a></p>
+        </div>
+    </footer>
+
+    <script>
+        // Simple form handling - replace with your actual backend
+        document.querySelectorAll('.signup-form').forEach(form => {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const email = this.querySelector('input[type="email"]').value;
+
+                // For demo purposes, show success message
+                // Replace this with actual form submission to your backend
+                // Example: fetch('/api/waitlist', { method: 'POST', body: JSON.stringify({ email }) })
+
+                const successMsg = document.getElementById('success-message');
+                if (successMsg) {
+                    successMsg.classList.add('show');
+                }
+                this.querySelector('input[type="email"]').value = '';
+
+                // Log for testing - remove in production
+                console.log('Email submitted:', email);
+
+                // You can integrate with:
+                // - Mailchimp
+                // - ConvertKit
+                // - Buttondown
+                // - Your own backend API
+                // - Google Forms
+                // - Formspree
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+esphome:
+  name: 4tress-sensor-1
+  friendly_name: 4tress Wall Sensor 1
+
+esp32:
+  board: esp32dev
+
+wifi:
+  ssid: "Coconet"
+  password: "720911011"
+  
+  ap:
+    ssid: "4tress-Sensor-1"
+    password: "4tress123"
+
+captive_portal:
+
+logger:
+
+api:
+  encryption:
+    key: "vhVBr/R0ws4LVB1q7ygF0NSrHYFYU/QG86d0bRJREjs="
+
+ota:
+  platform: esphome
+
+i2c:
+  sda: GPIO21
+  scl: GPIO22
+
+sensor:
+  - platform: bme280_i2c
+    temperature:
+      name: "Temperature"
+    pressure:
+      name: "Pressure"
+    humidity:
+      name: "Humidity"
+    address: 0x76
+    update_interval: 60s
