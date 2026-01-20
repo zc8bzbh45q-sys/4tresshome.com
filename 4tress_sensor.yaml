@@ -32,6 +32,7 @@ i2c:
 http_request:
   useragent: esphome/4tress-sensor
   timeout: 10s
+  verify_ssl: false
 
 # Global variables to store sensor readings
 globals:
@@ -114,8 +115,3 @@ interval:
             press["type"] = "pressure";
             press["value"] = id(current_pressure);
             press["unit"] = "hPa";
-          on_response:
-            then:
-              - logger.log:
-                  format: "Response status: %d"
-                  args: ['response_status_code']
