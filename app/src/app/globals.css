@@ -1,0 +1,78 @@
+@import "tailwindcss";
+
+:root {
+  --background: #F7FAFC;
+  --foreground: #1A202C;
+
+  /* 4tress Color Palette */
+  --primary: #2D3748;
+  --primary-light: #4A5568;
+  --accent: #3182CE;
+  --accent-hover: #2B6CB0;
+  --accent-light: #63B3ED;
+  --bg-light: #F7FAFC;
+  --bg-white: #FFFFFF;
+  --text-dark: #1A202C;
+  --text-gray: #718096;
+  --border: #E2E8F0;
+  --success: #48BB78;
+  --success-light: #C6F6D5;
+  --warning: #ED8936;
+  --warning-light: #FEEBC8;
+  --danger: #E53E3E;
+  --danger-light: #FED7D7;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-light: var(--primary-light);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-light: var(--accent-light);
+  --color-bg-light: var(--bg-light);
+  --color-bg-white: var(--bg-white);
+  --color-text-dark: var(--text-dark);
+  --color-text-gray: var(--text-gray);
+  --color-border: var(--border);
+  --color-success: var(--success);
+  --color-success-light: var(--success-light);
+  --color-warning: var(--warning);
+  --color-warning-light: var(--warning-light);
+  --color-danger: var(--danger);
+  --color-danger-light: var(--danger-light);
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+/* Custom component styles */
+.btn-primary {
+  @apply bg-accent text-white px-4 py-2 rounded-lg font-medium transition-colors hover:bg-accent-hover;
+}
+
+.btn-secondary {
+  @apply bg-bg-white text-primary border border-border px-4 py-2 rounded-lg font-medium transition-colors hover:bg-bg-light;
+}
+
+.btn-danger {
+  @apply bg-danger text-white px-4 py-2 rounded-lg font-medium transition-colors hover:bg-red-700;
+}
+
+.card {
+  @apply bg-bg-white rounded-xl border border-border p-6 shadow-sm;
+}
+
+.input {
+  @apply w-full px-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent;
+}
+
+.label {
+  @apply block text-sm font-medium text-text-dark mb-1;
+}

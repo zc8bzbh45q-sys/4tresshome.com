@@ -8,7 +8,7 @@ esp32:
 wifi:
   ssid: "Coconet"
   password: "720911011"
-  
+
   ap:
     ssid: "4tress-Sensor-1"
     password: "4tress123"
@@ -28,13 +28,94 @@ i2c:
   sda: GPIO21
   scl: GPIO22
 
+# HTTP Request component for sending data to Supabase
+http_request:
+  useragent: esphome/4tress-sensor
+  timeout: 10s
+
+# Global variables to store sensor readings
+globals:
+  - id: current_temperature
+    type: float
+    initial_value: '0'
+  - id: current_humidity
+    type: float
+    initial_value: '0'
+  - id: current_pressure
+    type: float
+    initial_value: '0'
+
+# Substitutions - Replace these with your actual values from the 4tress dashboard
+substitutions:
+  # Get these from your device detail page in the 4tress dashboard
+  device_id: "YOUR_DEVICE_ID_HERE"
+  api_key: "YOUR_API_KEY_HERE"
+  # Your Supabase project URL
+  supabase_url: "https://YOUR_PROJECT.supabase.co"
+
 sensor:
   - platform: bme280_i2c
     temperature:
       name: "Temperature"
+      id: temp_sensor
+      unit_of_measurement: "°F"
+      filters:
+        - lambda: return x * 9.0/5.0 + 32.0;  # Convert Celsius to Fahrenheit
+      on_value:
+        then:
+          - globals.set:
+              id: current_temperature
+              value: !lambda 'return x;'
     pressure:
       name: "Pressure"
+      id: pressure_sensor
+      unit_of_measurement: "hPa"
+      on_value:
+        then:
+          - globals.set:
+              id: current_pressure
+              value: !lambda 'return x;'
     humidity:
       name: "Humidity"
+      id: humidity_sensor
+      unit_of_measurement: "%"
+      on_value:
+        then:
+          - globals.set:
+              id: current_humidity
+              value: !lambda 'return x;'
     address: 0x76
     update_interval: 60s
+
+# Time-based interval to send data to Supabase
+interval:
+  - interval: 60s
+    then:
+      - http_request.post:
+          url: "${supabase_url}/functions/v1/ingest-sensor-data"
+          headers:
+            Content-Type: application/json
+          json: |-
+            root["device_id"] = "${device_id}";
+            root["api_key"] = "${api_key}";
+            JsonArray readings = root.createNestedArray("readings");
+
+            JsonObject temp = readings.createNestedObject();
+            temp["type"] = "temperature";
+            temp["value"] = id(current_temperature);
+            temp["unit"] = "°F";
+
+            JsonObject humid = readings.createNestedObject();
+            humid["type"] = "humidity";
+            humid["value"] = id(current_humidity);
+            humid["unit"] = "%";
+
+            JsonObject press = readings.createNestedObject();
+            press["type"] = "pressure";
+            press["value"] = id(current_pressure);
+            press["unit"] = "hPa";
+          on_response:
+            then:
+              - logger.log:
+                  format: "Response status: %d"
+                  args: ['response_status_code']
